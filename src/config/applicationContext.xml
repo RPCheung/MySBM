@@ -24,18 +24,21 @@
 		p:initialPoolSize="${jdbc.initialPoolSize}" />
 
 
-
+    <!-- 配置Mybatis跟dataSource 连接所需要的 工厂类 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource" />
-
+		
+ 	<!-- Mybatis最简单配置 只需指定DAO接口所在的包  以及  工厂类即可   
+ 					在接口注解写上SQL语句即可  无需配置 mapper.xml -->
 	<mybatis-spring:scan base-package="com.rp.myweb.mapper"
 		factory-ref="sqlSessionFactory" />
 
+	<!-- 配置事物管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+	<!-- 开启事物管理器注解 -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 
 
